@@ -1,0 +1,11 @@
+.DS_Store
+npm-debug.log
+web/node_modules/
+web/dist/
+web/static/ckeditor
+web/npm-debug.log
+web/test/unit/coverage
+web/test/e2e/reports
+web/selenium-debug.log
+zuploads/*
+api/vendor

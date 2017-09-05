@@ -1,0 +1,11 @@
+/vendor*
+.env
+.DS_Store
+*.swp
+.php*
+!.php_cs.dist
+storage/logs
+storage/files
+dist
+dist.tar.gz
+./index.html
