@@ -1,198 +1,192 @@
-# vue-element-admin #
+# Vue.js + vuex
 
-[![vue](https://img.shields.io/badge/vue-2.4.2-brightgreen.svg)](https://github.com/vuejs/vue)
-[![element-ui](https://img.shields.io/badge/element--ui-1.4.1-brightgreen.svg)](https://github.com/ElemeFE/element)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/PanJiaChen/vue-element-admin/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/PanJiaChen/vue-element-admin.svg)]()
+## vuex基础
+vuex是一个专为vue.js应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
 
+### 状态管理模式
 
-[线上地址](http://panjiachen.github.io/vue-element-admin)
-
-[English Document](https://github.com/PanJiaChen/vue-element-admin/blob/master/README-en.md)
-
-[wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
-
-**本项目的定位是后台集成方案，不适合当基础模板来开发，模板建议使用 [vueAdmin-template](https://github.com/PanJiaChen/vueAdmin-template) ， 桌面端 [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)**
-
-
-
-**注意：该项目目前使用element-ui@1.4.1版本，所以最低兼容 Vue 2.3.0**
-
-## 前言
-> 这半年来一直在用vue写管理后台，目前后台已经有百来个页面，十几种权限，但维护成本依然很低，所以准备开源分享一下后台开发的经验和成果。目前的技术栈主要的采用vue+element+axios由webpack2打包。由于是个人项目，所以数据请求都是用了mockjs模拟。注意：在此项目基础上改造开发时请移除mock文件。
-
-
-写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
-
- - [wiki](https://github.com/PanJiaChen/vue-element-admin/wiki)
- - [手摸手，带你用 vue 撸后台 系列一(基础篇)](https://juejin.im/post/59097cd7a22b9d0065fb61d2)
- - [手摸手，带你用 vue 撸后台 系列二(登录权限篇)](https://juejin.im/post/591aa14f570c35006961acac)
- - [手摸手，带你用 vue 撸后台 系列三 (实战篇)](https://juejin.im/post/593121aa0ce4630057f70d35)
- - [手摸手，带你用vue撸后台 系列四(vueAdmin 一个极简的后台基础模板)](https://juejin.im/post/595b4d776fb9a06bbe7dba56)
- - [手摸手，带你封装一个vue component](https://segmentfault.com/a/1190000009090836)
-
- 相应需求，开了一个qq群 `591724180` 方便大家交流
-
- **如有问题请先看上述文章和Wiki，若不能满足，欢迎 issue 和 pr ~**
-
- **该项目并不是一个脚手架，更倾向于是一个集成解决方案**
-
- **该项目不支持低版本游览器，有需求请自行添加polyfill [详情](https://github.com/PanJiaChen/vue-element-admin/wiki#babel-polyfill)**
-
-
-## 功能
-- 登录/注销
-- 权限验证
-- 侧边栏
-- 面包屑
-- 富文本编辑器
-- Markdown编辑器
-- JSON编辑器
-- 列表拖拽
-- plitPane
-- Dropzone
-- Sticky
-- CountTo
-- echarts图表
-- 401，404错误页面
-- 错误日志
-- 导出excel
-- table example
-- 动态table example
-- 拖拽table example
-- 内联编辑table example
-- form example
-- 多环境发布
-- dashboard
-- 二次登录
-- 动态侧边栏（支持多级路由）
-- mock数据
-- cache tabs example
-- screenfull
-- markdown2html
-- views-tab
-
-
-## 开发
-```bash
-    # 克隆项目
-    git clone https://github.com/PanJiaChen/vue-element-admin.git
-
-    # 安装依赖
-    npm install
-    //or # 建议不要用cnpm  安装有各种诡异的bug 可以通过如下操作解决npm速度慢的问题
-    npm install --registry=https://registry.npm.taobao.org
-
-    # 本地开发 开启服务
-    npm run dev
-```
-浏览器访问 http://localhost:9527
-
-## 发布
-```bash
-    # 发布测试环境 带webpack ananalyzer
-    npm run build:sit-preview
-
-    # 构建生成环境
-    npm run build:prod
-```
-
-## 目录结构
-```shell
-├── build                      // 构建相关  
-├── config                     // 配置相关
-├── src                        // 源代码
-│   ├── api                    // 所有请求
-│   ├── assets                 // 主题 字体等静态资源
-│   ├── components             // 全局公用组件
-│   ├── directive              // 全局指令
-│   ├── filtres                // 全局filter
-│   ├── mock                   // mock数据
-│   ├── router                 // 路由
-│   ├── store                  // 全局store管理
-│   ├── styles                 // 全局样式
-│   ├── utils                  // 全局公用方法
-│   ├── view                   // view
-│   ├── App.vue                // 入口页面
-│   └── main.js                // 入口 加载组件 初始化等
-├── static                     // 第三方不打包资源
-│   └── Tinymce                // 富文本
-├── .babelrc                   // babel-loader 配置
-├── eslintrc.js                // eslint 配置项
-├── .gitignore                 // git 忽略项
-├── favicon.ico                // favicon图标
-├── index.html                 // html模板
-└── package.json               // package.json
+#### 单项数据流
 
 ```
+ +--------------------> View --------------------+
+ |                                               |
+ |                                               |
+ |                                               |
+ |                                               |
+ +--------- State <------------- Actions <-------+
+```
 
-## Changelog
-Detailed changes for each release are documented in the [release notes](https://github.com/PanJiaChen/vue-element-admin/releases).
-
-## 状态管理
-后台只有user和app配置相关状态使用vuex存在全局，其它数据都由每个业务页面自己管理。
-
-
-## 效果图
-
-#### 两步验证登录 支持微信和qq
-
-![两步验证 here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/2login.gif)
-
-#### 真正的动态换肤
-
-![真正的动态换肤](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/theme.gif)<br />
-
-#### tabs
-
-![tabs](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/tabs.gif)<br />
+#### state
+驱动应用的数据源。
 
 
+#### view
+以声明方式将state映射到视图。
 
-#### 可收起侧边栏
+#### actions
+响应在view上的用户输入导致的状态变化。
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/leftmenu.gif)
+但是，当我们应用遇到多个组件共享状态时，单向数据流的简洁性很容易被破坏:
 
-#### table拖拽排序
+* 多个试图依赖同一状态。
+* 来自不同视图的行为需要变更同一状态。
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/order.gif)
-
-
-#### 动态table
-
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/dynamictable.gif)
-
-
-#### 上传裁剪头像
-
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/uploadAvatar.gif)
+可采取共享状态抽取出来，以一个全局单例模式管理。这种模式下，我们的组件构成了一个巨大的"视图", 不管在树的哪个位置，任何组件都能获取状态或者触发行为。
 
 
-#### 错误统计
+### State介绍
+vuex使用单一状态树。唯一数据源SSOT(Single source of truth)。
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/errorlog.gif)
+#### 在vue组件中获取vuex的状态
+```
+const Counter = {
+  template: `<div>{{ count }}</div>`,
+  computed: {
+    count() {
+      return store.state.count
+    }
+  }
+}
+```
+
+#### 通过store选项，将状态从根组件注入到每个自组件中
+```
+const app = new Vue({
+  el: '#app',
+  // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
+  store,
+  components: { Counter },
+  template: `
+    <div class="app">
+      <counter></counter>
+    </div>
+  `
+})
 
 
-#### 富文本(整合七牛 打水印等个性化功能)
+// 然后在Counter组件可以如下方式实现
+const Counter = {
+  template: `<div>{{ count }}</div>`,
+  computed: {
+    count () {
+      return this.$store.state.count
+    }
+  }
+}
+```
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/editor.gif)
+#### mapState辅助函数
 
-#### 封装table组件
+当一个组件需要获取多个状态的时候，将这些状态都声明为计算属性有些重复和冗余。为了解决这个问题，我们可以使用mapState辅助函数帮助我们生成计算属性:
+```
+// 在单独构建的版本中辅助函数为 Vuex.mapState
+import { mapState } from 'vuex'
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/table.gif)
+export default {
+  // ...
+  computed: mapState({
+    // 箭头函数可使代码更简练
+    count: state => state.count,
 
-#### 图表
+    // 传字符串参数 'count' 等同于 `state => state.count`
+    countAlias: 'count',
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/echarts.gif)
+    // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    countPlusLocalState (state) {
+      return state.count + this.localCount
+    }
+  })
+}
+
+// 当映射的计算属性的名称与 state 的子节点名称相同时，我们也可以给 mapState 传一个字符串数组。
+
+computed: mapState([
+  // 映射 this.count 为 store.state.count
+  'count'
+])
+```
+
+#### 对象展开运算符
+```
+computed: {
+  localComputed () { /* ... */ },
+  // 使用对象展开运算符将此对象混入到外部对象中
+  ...mapState({
+    // ...
+  })
+}
+```
+
+#### 组件仍然保有局部状态
+使用 Vuex 并不意味着你需要将所有的状态放入 Vuex。虽然将所有的状态放到 Vuex 会使状态变化更显式和易调试，但也会使代码变得冗长和不直观。如果有些状态严格属于单个组件，最好还是作为组件的局部状态。你应该根据你的应用开发需要进行权衡和确定。
 
 
-#### 导出excel
+### Getters
+场景: 需要从store中派生出来一些状态，比如对列表进行过滤并计数。
 
-![enter image description here](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/excel.png)
+假设在多个组件中都需要使用到这个派生状态，那么普通的实现方式是在每个组件中都拷贝一份这样的函数，或者抽离成共享函数，需要的地方导入这个函数。
 
+上面两种方式都不是很理想的方式。Getters就提供了一种解决这种需求的方式。
 
-## [查看更多demo](http://panjiachen.github.io/vue-element-admin)
+vuex允许我们在store中定义getters(可以认为是store的计算属性). 就像计算属性一样，getters的返回值会根据它的依赖被缓存起来，且只有当它的依赖发生了改变才会被重新计算。
+```
+// Getters 接受 state 作为其第一个参数：
+const store = new Vuex.Store({
+  state: {
+    todos: [
+      { id: 1, text: '...', done: true },
+      { id: 2, text: '...', done: false }
+    ]
+  },
+  getters: {
+    doneTodos: state => {
+      return state.todos.filter(todo => todo.done)
+    }
+  }
+})
+// Getters 会暴露为 store.getters 对象：
+store.getters.doneTodos // -> [{ id: 1, text: '...', done: true }]
 
-## License
+// Getters 也可以接受其他 getters 作为第二个参数：
+getters: {
+  // ...
+  doneTodosCount: (state, getters) => {
+    return getters.doneTodos.length
+  }
+}
+store.getters.doneTodosCount // -> 1
 
-MIT
+//我们可以很容易地在任何组件中使用它：
+computed: {
+  doneTodosCount () {
+    return this.$store.getters.doneTodosCount
+  }
+}
+```
+
+#### mapGetters 辅助函数
+```
+// mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性：
+import { mapGetters } from 'vuex'
+export default {
+  // ...
+  computed: {
+  // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+      'doneTodosCount',
+      'anotherGetter',
+      // ...
+    ])
+  }
+}
+
+// 如果你想将一个 getter 属性另取一个名字，使用对象形式：
+mapGetters({
+  // 映射 this.doneCount 为 store.getters.doneTodosCount
+  doneCount: 'doneTodosCount'
+})
+```
+
+## 参考链接
+
+* [vuex官方文档](https://vuex.vuejs.org/zh-cn/state.html)

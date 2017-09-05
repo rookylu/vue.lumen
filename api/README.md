@@ -256,8 +256,9 @@ Accept: application/vnd.github.v3+json      # 请求v3版本，格式json
 
 ## 填充假数据
 * database/migrations: 创建表的类
-* database/seed: 填充初始化数据的类
+* database/seeds: 填充初始化数据的类
 * database/factories: 为模型创建模拟数据的工厂类
+* database/seeds/DatabaseSeeder.php: 要填充数据的需要在这里挂钩起来
 
 ## 踩坑记录
 1. PHP7.0 composer install报错 composer install --ignore-platform-reqs
