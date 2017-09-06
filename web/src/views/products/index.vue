@@ -50,10 +50,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column  align="center" label="操作" width="100">
+      <el-table-column  align="center" label="操作" width="250">
         <template scope="scope">
-          <el-button v-if="scope.row.status!='deleted'" size="small" type="danger" @click="del(scope.row)">删除
-            </el-button>
+          <el-button v-if="scope.row.is_disabled != 1" size="small" type="primary">茶叶交付</el-button>
+          <el-button v-if="scope.row.is_disabled != 1" size="small" type="primary">别墅度假</el-button>
+          <el-button size="small" type="danger" @click="del(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
