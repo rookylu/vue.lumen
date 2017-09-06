@@ -61,6 +61,14 @@ service.interceptors.response.use(
           duration: 3000
         })
         break
+      case 404:
+        Notification({
+          title: '失败',
+          message: '请求资源不存在',
+          type: 'error',
+          duration: 3000
+        })
+        break
       case 422:
         var errmsg = ''
         data.errors.map(err => {

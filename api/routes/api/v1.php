@@ -100,5 +100,42 @@ $api->version('v1', [
             'as' => 'user.password.update',
             'uses' => 'UserController@editPassword',
         ]);
+
+
+        // 庄园主接口
+        $api->get('manorOwners', [
+            'as' => 'manorOwners.index',
+            'uses' => 'ManorOwnerController@index',
+        ]);
+        $api->post('manorOwners', [
+            'as' => 'manorOwners.store',
+            'uses' => 'ManorOwnerController@store',
+        ]);
+        $api->put('manorOwners/{id}', [
+            'as' => 'manorOwners.update',
+            'uses' => 'ManorOwnerController@update',
+        ]);
+        $api->delete('manorOwners/{id}', [
+            'as' => 'manorOwners.destroy',
+            'uses' => 'ManorOwnerController@destroy',
+        ]);
+
+        // 签约产品接口
+        $api->get('products', [
+            'as' => 'products.index',
+            'uses' => 'ProductController@index',
+        ]);
+        $api->post('products', [
+            'as' => 'products.store',
+            'uses' => 'ProductController@store',
+        ]);
+        $api->put('products/{id}', [
+            'as' => 'products.update',
+            'uses' => 'ProductController@update',
+        ]);
+        $api->delete('products/{id}', [
+            'as' => 'products.destroy',
+            'uses' => 'ProductController@destroy',
+        ]);
     });
 });

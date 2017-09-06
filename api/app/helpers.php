@@ -51,3 +51,22 @@ if (! function_exists('trans')) {
         return app('translator')->trans($id, $parameters, $domain, $locale);
     }
 }
+
+if (! function_exists('get_unique_id'))
+{
+    /**
+     * @desc 获取唯一id号
+     * @param string $prefix 返回id的前缀
+     * @return string unique id
+     */
+    function get_unique_id($prefix = '')
+    {
+        //$id = date('Ymd') . strtoupper(uniqid());
+        $time = time();
+        $year = date('Y', $time);
+        $no = strtoupper(dechex($year)) . date('md', $time);
+        $suffix = dechex($time);
+        $id = $no . strtoupper($suffix);
+        return $prefix ? $prefix . $id : $id;
+    }
+}
