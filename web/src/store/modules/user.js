@@ -1,4 +1,4 @@
-import { loginByUsername, logout, getUserInfo } from '@/api/login'
+import { loginByEmail, logout, getUserInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user = {
@@ -9,7 +9,7 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    introduction: '',
+    desc: '',
     roles: [],
     setting: {
       articlePlatform: []
@@ -23,8 +23,8 @@ const user = {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
+    SET_DESC: (state, desc) => {
+      state.desc = desc
     },
     SET_SETTING: (state, setting) => {
       state.setting = setting
@@ -45,14 +45,24 @@ const user = {
 
   actions: {
     // 用户名登录
-    LoginByUsername({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+    LoginByEmail({ commit }, userInfo) {
+      const email = userInfo.email.trim()
       return new Promise((resolve, reject) => {
-        loginByUsername(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(response.data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
+        loginByEmail(email, userInfo.password).then(response => {
+          // 根据登录响应进行处理
+          const {
+            data: {
+              data
+            },
+            status
+          } = response
+          if (status === 201) {
+            setToken(data.token)
+            commit('SET_TOKEN', data.token)
+            resolve()
+          } else {
+            reject(new Error('登录失败'))
+          }
         }).catch(error => {
           reject(error)
         })
@@ -63,11 +73,11 @@ const user = {
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.token).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.role)
+          const data = response.data.data
+          commit('SET_ROLES', ['admin'])
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
+          commit('SET_DESC', data.desc)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -118,11 +128,11 @@ const user = {
         commit('SET_TOKEN', role)
         setToken(role)
         getUserInfo(role).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.role)
+          const data = response.data.data
+          commit('SET_ROLES', ['editor'])
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)
+          commit('SET_DESC', data.desc)
           resolve()
         })
       })

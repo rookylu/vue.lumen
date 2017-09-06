@@ -7,6 +7,14 @@ export function isvalidUsername(str) {
   return valid_map.indexOf(str.trim()) >= 0
 }
 
+/**
+ * @desc 判断是否合法的邮箱
+ */
+export function isWscnEmail(str) {
+  const reg = /^[a-z0-9](?:[-_.+]?[a-z0-9]+)*@[a-z0-9](?:[-_.+]?[a-z0-9]+)*$/i
+  return reg.test(str.trim())
+}
+
 /* 合法uri*/
 export function validateURL(textval) {
   const urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/

@@ -26,29 +26,9 @@ $api->version('v1', [
 ], function ($api) {
     // Auth
     // login
-    $api->post('authorizations', [
+    $api->post('kf/login', [
         'as' => 'authorizations.store',
         'uses' => 'AuthController@store',
-    ]);
-
-
-    // POST
-    // post list
-    $api->get('posts', [
-        'as' => 'posts.index',
-        'uses' => 'PostController@index',
-    ]);
-    // post detail
-    $api->get('posts/{id}', [
-        'as' => 'posts.show',
-        'uses' => 'PostController@show',
-    ]);
-
-    // POST COMMENT
-    // post comment list
-    $api->get('posts/{postId}/comments', [
-        'as' => 'posts.comments.index',
-        'uses' => 'CommentController@index',
     ]);
 
     /*
@@ -57,7 +37,7 @@ $api->version('v1', [
      * 所以暂时就是 authorizations/current 表示当前header中的这个token。
      * 如果 tokekn 保存保存在数据库，那么就是 authorizations/{id}，像 github 那样。
      */
-    $api->put('authorizations/current', [
+    $api->put('kf/refresh', [
         'as' => 'authorizations.update',
         'uses' => 'AuthController@update',
     ]);
@@ -70,14 +50,14 @@ $api->version('v1', [
          * 所以暂时就是 authorizations/current 表示当前header中的这个token。
          * 如果 tokekn 保存保存在数据库，那么就是 authorizations/{id}，像 github 那样。
          */
-        $api->delete('authorizations/current', [
+        $api->delete('kf/logout', [
             'as' => 'authorizations.destroy',
             'uses' => 'AuthController@destroy',
         ]);
 
         // USER
         // my detail
-        $api->get('user', [
+        $api->get('kf/info', [
             'as' => 'user.show',
             'uses' => 'UserController@userShow',
         ]);
@@ -119,104 +99,6 @@ $api->version('v1', [
         $api->put('user/password', [
             'as' => 'user.password.update',
             'uses' => 'UserController@editPassword',
-        ]);
-
-        // POST
-        // user's posts index
-        $api->get('user/posts', [
-            'as' => 'user.posts.index',
-            'uses' => 'PostController@userIndex',
-        ]);
-        // create a post
-        $api->post('posts', [
-            'as' => 'posts.store',
-            'uses' => 'PostController@store',
-        ]);
-        // update a post
-        $api->put('posts/{id}', [
-            'as' => 'posts.update',
-            'uses' => 'PostController@update',
-        ]);
-        // update part of a post
-        $api->patch('posts/{id}', [
-            'as' => 'posts.patch',
-            'uses' => 'PostController@patch',
-        ]);
-        // delete a post
-        $api->delete('posts/{id}', [
-            'as' => 'posts.destroy',
-            'uses' => 'PostController@destroy',
-        ]);
-
-        // POST COMMENT
-        // create a comment
-        $api->post('posts/{postId}/comments', [
-            'as' => 'posts.comments.store',
-            'uses' => 'CommentController@store',
-        ]);
-        $api->put('posts/{postId}/comments/{id}', [
-            'as' => 'posts.comments.update',
-            'uses' => 'CommentController@update',
-        ]);
-        // delete a comment
-        $api->delete('posts/{postId}/comments/{id}', [
-            'as' => 'posts.comments.destroy',
-            'uses' => 'CommentController@destroy',
-        ]);
-
-
-		// menus
-        $api->get('menus', [
-            'as' => 'menus.list',
-            'uses' => 'MenuController@index',
-        ]);
-        $api->post('menus', [
-            'as' => 'menus.store',
-            'uses' => 'MenuController@store',
-        ]);
-		$api->patch('menus/{id}', [
-            'as' => 'menus.update',
-            'uses' => 'MenuController@update',
-        ]);
-		$api->delete('menus/{id}', [
-            'as' => 'menus.destroy',
-            'uses' => 'MenuController@destroy',
-        ]);
-
-		// files
-        $api->get('folders/{fid}/files', [
-            'as' => 'files.list',
-            'uses' => 'FileController@index',
-        ]);
-        $api->post('folders/{fid}/files', [
-            'as' => 'files.store',
-            'uses' => 'FileController@store',
-        ]);
-		$api->patch('folders/{fid}/files/{id}', [
-            'as' => 'files.update',
-            'uses' => 'FileController@update',
-        ]);
-		$api->delete('folders/{fid}/files/{id}', [
-            'as' => 'files.destroy',
-            'uses' => 'FileController@destroy',
-        ]);
-
-		// folders
-        $api->get('folders', [
-            'as' => 'folders.list',
-            'uses' => 'FolderController@index',
-        ]);
-        $api->post('folders', [
-            'as' => 'folders.store',
-            'uses' => 'FolderController@store',
-        ]);
-		$api->patch('folders/{id}', [
-            'as' => 'folders.update',
-            'uses' => 'FolderController@update',
-        ]);
-		$api->delete('folders/{id}', [
-            'as' => 'folders.destroy',
-            'uses' => 'FolderController@destroy',
         ]);
     });
 });

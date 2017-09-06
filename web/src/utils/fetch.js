@@ -2,10 +2,15 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import router from 'router'
+import { Notification } from 'element-ui'
 
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
+  validateStatus: function(status) {
+    return status >= 200 && status <= 500
+  },
   timeout: 5000                  // 请求超时时间
 })
 
@@ -13,7 +18,8 @@ const service = axios.create({
 service.interceptors.request.use(config => {
   // Do something before request is sent
   if (store.getters.token) {
-    config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+    config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+    // config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
   }
   return config
 }, error => {
@@ -24,7 +30,63 @@ service.interceptors.request.use(config => {
 
 // respone拦截器
 service.interceptors.response.use(
-  response => response,
+  res => {
+    const data = res.data
+
+    switch (res.status) {
+      case 401:
+        router.push('login')
+        break
+      case 201:
+        Notification({
+          title: '成功',
+          message: '操作成功',
+          type: 'success',
+          duration: 2000
+        })
+        break
+      case 204:
+        Notification({
+          title: '成功',
+          message: '操作成功',
+          type: 'success',
+          duration: 2000
+        })
+        break
+      case 400:
+        Notification({
+          title: '失败',
+          message: data.message,
+          type: 'error',
+          duration: 3000
+        })
+        break
+      case 422:
+        var errmsg = ''
+        data.errors.map(err => {
+          errmsg += err.code + ' '
+        })
+        Notification({
+          title: '失败',
+          message: errmsg,
+          type: 'error',
+          duration: 3000
+        })
+        break
+      default:
+        if (parseInt(res.status / 100) === 4) {
+          Notification({
+            title: '错误: ' + res.status,
+            message: '未知错误',
+            type: 'error',
+            duration: 2000
+          })
+        }
+    }
+
+    return res
+  },
+  // response => response,
   /**
   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
   * 如通过xmlhttprequest 状态码标识 逻辑可写在下面error中

@@ -3,11 +3,11 @@
     <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
       <h3 class="title">系统登录</h3>
 
-      <el-form-item prop="username">
+      <el-form-item prop="email">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="yonghuming" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="邮箱" />
+        <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="邮箱" />
       </el-form-item>
 
       <el-form-item prop="password">
@@ -20,11 +20,6 @@
       </el-form-item>
 
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
-
-      <div class='tips'>账号:admin 密码随便填</div>
-      <div class='tips'>账号:editor  密码随便填</div>
-
-      <el-button class='thirdparty-button' type="primary" @click='showDialog=true'>打开第三方登录</el-button>
     </el-form>
 
     <el-dialog title="第三方验证" :visible.sync="showDialog">
@@ -37,15 +32,15 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { isWscnEmail } from '@/utils/validate'
 import socialSign from './socialsignin'
 
 export default {
   components: { socialSign },
   name: 'login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+    const validateEmail = (rule, value, callback) => {
+      if (!isWscnEmail(value)) {
         callback(new Error('请输入正确的用户名'))
       } else {
         callback()
@@ -60,11 +55,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        email: 'qiaogqiang@163.com',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       pwdType: 'password',
@@ -84,7 +79,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByEmail', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
                 // this.showDialog = true
