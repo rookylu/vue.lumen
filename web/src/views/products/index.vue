@@ -14,6 +14,11 @@
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
+      <el-table-column width="200px" align="center" label="系统编号">
+        <template scope="scope">
+          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.sys_no}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column width="200px" align="center" label="产品名称">
         <template scope="scope">
@@ -142,7 +147,7 @@
           product_name: '',
           signed_at: undefined,
           payment_at: undefined,
-          money: undefined,
+          money: 9800,
           sys_no: '',
           num: 1
         },
@@ -299,7 +304,7 @@
           product_name: '',
           signed_at: undefined,
           payment_at: undefined,
-          money: undefined,
+          money: 9800,
           sys_no: '',
           num: 1
         }

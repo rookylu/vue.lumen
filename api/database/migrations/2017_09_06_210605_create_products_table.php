@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('sys_no', 32)->unique()->default('')->comment('系统编号');
             $table->string('product_name', 32)->default('')->comment('产品标题');
-            $table->datetime('signed_at')->comment('简约时间');
-            $table->datetime('payment_at')->comment('付款时间');
+            $table->date('signed_at')->comment('简约时间');
+            $table->date('payment_at')->comment('付款时间');
             $table->decimal('money', 10, 2)->default(0.00)->comment('付款金额');
             $table->unsignedTinyInteger('is_disabled')->default(0)->comment('是否禁用');
             $table->integer('creator_id')->default(0)->comment('创建人ID');
