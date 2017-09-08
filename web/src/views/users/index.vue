@@ -31,7 +31,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="80px" align="center" label="姓名">
+      <el-table-column min-width="220px" align="center" label="姓名">
         <template scope="scope">
           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.real_name}}</span>
         </template>
@@ -49,7 +49,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="160px" align="center" label="电话">
+      <el-table-column width="200px" align="center" label="电话">
         <template scope="scope">
           <span>{{scope.row.cellphone}}</span>
         </template>

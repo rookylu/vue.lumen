@@ -137,5 +137,28 @@ $api->version('v1', [
             'as' => 'products.destroy',
             'uses' => 'ProductController@destroy',
         ]);
+        // 茶叶交付记录
+        $api->get('teas', [
+            'as' => 'teas.index',
+            'uses' => 'TeaController@index',
+        ]);
+        $api->patch('teas/{id}', [
+            'as' => 'teas.deliver',
+            'uses' => 'TeaController@deliver',
+        ]);
+
+        // 别墅度假
+        $api->get('vacations', [
+            'as' => 'vacations.index',
+            'uses' => 'VacationController@index',
+        ]);
+        $api->get('vacations/{id}', [
+            'as' => 'vacations.show',
+            'uses' => 'VacationController@show',
+        ]);
+        $api->put('vacations/{id}', [
+            'as' => 'vacations.update',
+            'uses' => 'VacationController@update',
+        ]);
     });
 });

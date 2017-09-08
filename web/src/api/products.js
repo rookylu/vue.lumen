@@ -57,3 +57,48 @@ export function deleteProduct(params) {
     params
   })
 }
+
+export function getTeas(params) {
+  return fetch({
+    url: '/teas',
+    method: 'get',
+    params
+  })
+}
+
+export function deliveryTea(params) {
+  const id = params.id
+  return fetch({
+    url: `/teas/${id}`,
+    method: 'patch'
+  })
+}
+
+export function getVacations(params) {
+  return fetch({
+    url: '/vacations',
+    method: 'get',
+    params
+  })
+}
+
+export function updateVacation(params) {
+  const id = params.id
+  delete params.id
+
+  return fetch({
+    url: `/vacations/${id}`,
+    method: 'put',
+    data: params
+  })
+}
+
+export function vacationDetail(params) {
+  const id = params.id
+  delete params.id
+
+  return fetch({
+    url: `/vacations/${id}`,
+    method: 'get'
+  })
+}

@@ -30,3 +30,16 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'updated_at' => $createdAt,
     ];
 });
+
+// https://faker.readthedocs.io/en/master/
+$factory->define(App\Models\ManorOwner::class, function (Faker\Generator $faker) {
+    $createdAt = randDate();
+
+    return [
+        'real_name' => $faker->name,
+        'cellphone' => $faker->phoneNumber,
+        'company_name' => $faker->company,
+        'created_at' => $createdAt,
+        'updated_at' => $createdAt,
+    ];
+});

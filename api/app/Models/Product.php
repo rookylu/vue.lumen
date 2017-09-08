@@ -7,4 +7,9 @@ class Product extends BaseModel
 {
     // 软删除
     use SoftDeletes;
+
+    public function customer()
+    {
+        return $this->belongsTo(ManorOwner::class, 'customer_id', 'id');
+    }
 }

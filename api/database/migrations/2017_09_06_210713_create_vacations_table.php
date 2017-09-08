@@ -18,6 +18,7 @@ class CreateVacationsTable extends Migration
             $table->integer('product_id')->default(0)->comment('产品ID');
             $table->integer('year')->default(0)->comment('年份');
             $table->decimal('stayed_time', 2, 1)->default(0.0)->comment('住宿时长, 单位: 天');
+            $table->decimal('remain_time', 2, 1)->default(2.5)->comment('剩余时间, 单位: 天');
             $table->decimal('total_time', 2, 1)->default(2.5)->comment('总时间, 单位: 天, 默认2天半，即3天2晚');
             $table->unsignedTinyInteger('is_disabled')->default(0)->comment('是否禁用');
             $table->integer('updator_id')->default(0)->comment('修改人ID');

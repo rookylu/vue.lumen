@@ -22,15 +22,19 @@ class ManorOwnerController extends BaseController
         $page           = $request->input('page',  1);           // 当前请求页
         $keyword        = $request->input('keyword', '');        // 搜索关键词
         $sort           = $request->input('sort', '+id');        // 结果排序方式
+        $all            = $request->input('all', 0);             // 是否查询全部
         $owners = $this->owner;
 
         if($keyword) {
             $owners = $owners->where('real_name', 'like', '%' . $keyword . '%');
         }
-
-
-        $owners = $owners->paginate($limit);
-        return $this->response->paginator($owners, new ManorOwnerTransformer());
+        if($all) {
+            $owners = $owners->get();
+            return $this->response->collection($owners, new ManorOwnerTransformer());
+        } else {
+            $owners = $owners->paginate($limit);
+            return $this->response->paginator($owners, new ManorOwnerTransformer());
+        }
     }
     public function show($id)
     {

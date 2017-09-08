@@ -65,5 +65,16 @@ export const asyncRouterMap = [
       { path: 'index', component: _import('products/index'), name: '签约管理' }
     ]
   },
+  {
+    path: '/rights',
+    component: Layout,
+    redirect: '/rights/index',
+    name: '权益管理',
+    icon: 'zujian',
+    children: [
+      { path: 'teas', component: _import('rights/teas'), name: '茶叶交付' },
+      { path: 'vacations', component: _import('rights/vacations'), name: '别墅度假' }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
